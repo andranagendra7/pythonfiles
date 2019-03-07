@@ -1,0 +1,19 @@
+powershell command:
+
+Get-ExecutionPolicy
+
+Set-ExecutionPolicy unrestricted
+
+python :
+
+pip install package_name
+
+pip install -U package_name
+
+pip show package_name
+
+pip list
+
+pip freeze 
+
+

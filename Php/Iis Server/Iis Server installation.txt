@@ -1,0 +1,14 @@
+iis web-server:
+
+now we can install the iis server two ways:
+                   1. cli (powershell)
+                   2. gui
+ 
+Install IIS With PowerShell:
+----------------------------
+
+If you don’t have the GUI installed or just want to use the PowerShell command line interface (CLI) instead, follow these steps.This method is a lot faster than going through all of the GUI options.
+
+Step 1: Open PowerShell with administrative privileges and run the Install-WindowsFeature cmdlet as shown below.
+  
+  >> Install-WindowsFeature -name Web-Server -IncludeManagementTools

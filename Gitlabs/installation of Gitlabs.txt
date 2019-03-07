@@ -1,0 +1,58 @@
+Introduction
+GitLab CE, or Community Edition, is an open source application primarily used to host Git repositories, with additional development-related features like issue tracking. It is designed to be hosted using your own infrastructure, and provides flexibility in deploying as an internal repository store for your development team, publicly as a way to interface with users, or even open as a way for contributors to host their own projects.
+
+The GitLab project makes it relatively straight forward to set up a GitLab instance on your own hardware with an easy installation mechanism. In this guide, we will cover how to install and configure GitLab on an Ubuntu 16.04 server.
+
+Prerequisites:
+--------------
+
+This tutorial will assume that you have access to a fresh Ubuntu 16.04 server.
+
+The published GitLab hardware requirements recommend using a server with:
+
+2 cores
+
+4GB of RAM
+
+
+Although you may be able to get by with substituting some swap space for RAM, it is not recommended.
+
+ For this guide we will assume that you have the above resources as a minimum.
+
+In order to get started, you will need a non-root user with sudo access configured on the server. 
+
+It is also a good idea to set up a basic firewall to provide an additional layer of security. 
+
+You can follow the steps in our Ubuntu 16.04 initial server setup guide to get this setup.
+
+
+Installing the Dependencies:
+---------------------------
+
+Before we can install GitLab itself, it is important to install some of the software that it leverages during installation and on an ongoing basis.
+
+ Fortunately, all of the required software can be easily installed from Ubuntu's default package repositories.
+
+Since this is our first time using apt during this session, we can refresh the local package index and then install the dependencies by typing
+
+
+sudo apt-get update
+
+sudo apt-get install ca-certificates curl openssh-server postfix
+
+
+You will likely have some of this software installed already. For the postfix installation, select Internet Site when prompted. 
+
+On the next screen, enter your server's domain name or IP address to configure how the system will send mail.
+
+Move into the /tmp directory and then download the installation script:
+
+cd /tmp
+
+curl -LO https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+
+Feel free to examine the downloaded script to ensure that you are comfortable with the actions that it will take. 
+
+You can also find a hosted version of the script here:
+
+less /tmp/script.deb.sh

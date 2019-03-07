@@ -1,0 +1,7 @@
+
+
+OCtopuserver details: 172.24.175.41
+
+Tentacle client details: 172.24.175.49
+
+servercreated date: 21/02/18

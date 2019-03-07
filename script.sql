@@ -1,0 +1,1 @@
+d:/python/scriptd:/python/scriptd:/python/script/nagenadra.sqld:/python/script/nagenadra.sql

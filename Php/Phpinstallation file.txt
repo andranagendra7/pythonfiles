@@ -1,0 +1,30 @@
+PHP installation:
+================
+
+REQUIREMENTS:
+
+Virtual Machine
+
+IIS Web Server
+
+WinCache Extension for PHP
+
+PHP Binary Files
+
+VC++ Compiler
+
+
+Installation iis server:
+-----------------------
+
+>> Install-WindowsFeature -name web-server,web-cgi –IncludeManagementTools
+
+Installation of php:
+
+
+installation of wincache extention:
+----------------------------------
+
+download link:
+-------------
+https://www.iis.net/downloads/microsoft/wincache-extension

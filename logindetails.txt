@@ -1,0 +1,50 @@
+
+To check service running or not:
+
+if (systemctl -q is-active some_application.service)
+    then
+    echo "Application is still running."
+    exit 1
+fi
+
+method 2:-
+
+service="mysqld"
+if [ -f "/etc/init.d/$service" ]; then
+    # mysqld service exists
+fi
+
+method 3:
+
+service mysqld status
+if [ $? = 0 ]; then
+    # mysqld service exists
+fi
+
+service=mysql
+status=$(/etc/init.d/mysql status)
+print "$status"
+
+
+#!/bin/sh
+
+serviceCommand() {
+  if sudo service --status-all | grep -Fq ${1}; then
+    sudo service ${1} ${2}
+  fi
+}
+
+serviceCommand apache2 status
+
+package = "apache2"
+name    = "start'
+
+servicecmd() {
+
+    if sudo service --status-all | grep -Fq $(1); then
+         
+		 sudo service $(1) $(2)
+    fi
+}
+
+sevicecmd $package $name

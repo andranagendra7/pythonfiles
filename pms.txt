@@ -1,0 +1,5 @@
+I'm  willing to work on  python and also latest updates on my domain. 
+Trying to complete assign python tasks and deployment prospective tasks  as soon as possible.
+ And also i have to learn Flask framework and Html, Css,JavaScript,J Query as soon as possible
+
+i want to fix the bugs on expert finder(igive  with out any bugs) and i want to give more importance for fixing bugs on expert finder and unit testing to cut down major issues

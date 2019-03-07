@@ -1,0 +1,12 @@
+
+To install the php manualy and  WINCACHEEXTENSION and integrate with iis webserver:
+-----------------------------------------------------------------------------------
+
+Link : 
+     >> https://www.assistanz.com/steps-to-install-php-manually-on-windows-2016-server/
+=============================================================================================================================================================
+apache and php and mysql installation link:
+------------------------------------------
+Link:
+
+  >>https://www.ultraedit.com/support/tutorials-power-tips/uestudio/local-php-mysql-dev-   environment.html

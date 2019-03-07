@@ -1,0 +1,120 @@
+
+
+PHP-mssql server configutration on linux server(Red-hat):
+-------------------------------------------------------
+
+step 1: we download the Php-mssql driver(sqlsrc and pdo_sqlrc) packages from the bellow link:
+
+  >>> wget https://github.com/Microsoft/msphpsql/releases/download/v5.3.0/CentOS7-7.0.tar
+
+step 2: Now, we uzip the tar file by using bellow command
+  
+   >>>tar -xvf CentOS7-7.0.tar
+
+example:
+
+tar -xvf CentOS7-7.0.tar
+Centos7-7.0/
+Centos7-7.0/php_pdo_sqlsrv_7_nts.signature
+Centos7-7.0/php_pdo_sqlsrv_7_nts.so
+Centos7-7.0/php_pdo_sqlsrv_7_ts.signature
+Centos7-7.0/php_pdo_sqlsrv_7_ts.so
+Centos7-7.0/php_sqlsrv_7_nts.signature
+Centos7-7.0/php_sqlsrv_7_nts.so
+Centos7-7.0/php_sqlsrv_7_ts.signature
+Centos7-7.0/php_sqlsrv_7_ts.so
+
+
+step 3: Now we are moving to bellow directory
+
+  >>>cd CentOS7-7.0
+
+example:
+
+cd Centos7-7.0
+
+
+step 4: Now we get the sqlsrc and pdo_sqlsrc file like bellow
+
+php_pdo_sqlsrv_7_nts.signature 
+ 
+php_pdo_sqlsrv_7_ts.signature 
+
+php_sqlsrv_7_nts.signature  
+
+php_sqlsrv_7_ts.signature
+
+php_pdo_sqlsrv_7_nts.so --> we need this file only
+          
+php_pdo_sqlsrv_7_ts.so    
+     
+php_sqlsrv_7_nts.so    --> we need this file only
+      
+php_sqlsrv_7_ts.so
+
+
+step 5: Now we move (or) copy the  this  two file's(php_pdo_sqlsrv_7_nts.so,php_sqlsrv_7_nts.so ) into this path (/usr/lib64/php/modules/)
+
+>> mv php_pdo_sqlsrv_7_nts.so /usr/lib64/php/modules/. (or) cp php_pdo_sqlsrv_7_nts.so /usr/lib64/php/modules/. 
+
+>> mv php_sqlsrv_7_nts.so   /usr/lib64/php/modules/.   (or) cp php_sqlsrv_7_nts.so      /usr/lib64/php/modules/. 
+
+step 6: Now we are moving to php modules directory
+
+cd /usr/lib64/php/modules
+
+step 7: now we rename the file's 
+
+ >> mv php_sqlsrv_7_nts.so       sql_srv.so
+
+ >> mv php_pdo_sqlsrv_7_nts.so   pdo_sqlsrv.so
+
+step 8: now we go to bellow path and create the pdo_sql.ini and sql_srv.ini
+
+
+>> cd /etc/php.d
+
+
+vi pdo_sqlsrv.ini 
+
+extenstion= pdo_sqlsrv.so
+
+:wq!
+
+vi sql_srv.ini
+
+extenstion= sql_srv.so
+
+:wq!
+
+step 9: Now, we heve install mssqlserver2017 odbcdriver on linux machine 
+
+#RedHat Enterprise Server 7
+
+To create the mssql-release repository
+
+   >> curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-release.repo
+
+now we install the  mssql server odbcdriver
+
+   >>> sudo ACCEPT_EULA=Y yum install msodbcsql17
+
+# optional: for bcp and sqlcmd
+
+sudo ACCEPT_EULA=Y yum install mssql-tools
+
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+
+source ~/.bashrc
+
+# optional: for unixODBC development headers
+sudo yum install unixODBC-devel
+
+Note: if we upgarde the unixODBC driver follow bellow proccess
+
+
+
+
+

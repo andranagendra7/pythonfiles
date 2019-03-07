@@ -1,0 +1,21 @@
+dlf_qa server db details:
+
+    [db_hostname] => 172.24.193.186
+    [db_name] => ECS_QA
+    [db_username] => ecs_qa
+    [db_password] => spi@321qa
+
+PONDY_qa server db  details:
+-------------------------
+
+old:
+
+    [db_hostname] => 172.24.144.46
+    [db_name] => ECS_QA
+    [db_username] => sa
+    [db_password] => spi@321
+new:
+     [db_hostname] => 172.24.144.46
+    [db_name] => ECS_QANEW
+    [db_username] => sa
+    [db_password] => spi@321

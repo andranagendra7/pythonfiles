@@ -1,0 +1,61 @@
+https://octopus.com/docs/v/3.17/installation/automating-installation
+
+
+These machines and services are your deployment targets
+
+
+on client machine:
+
+
+
+
+Here machines called to  
+
+Power Shell script:
+==================
+
+
+install the Octopus Deploy server:
+--------------------------------
+
+Configuration SampleConfig
+{
+    Import-DscResource -Module OctopusDSC
+
+    Node "localhost"
+    {
+        cOctopusServer OctopusServer
+        {
+            Ensure = "Present"
+            State = "Started"
+
+            # Server instance name. Leave it as 'OctopusServer' unless you have more than one instance
+            Name = "OctopusServer"
+
+            # The url that Octopus will listen on
+            WebListenPrefix = "http://localhost:80"
+
+            SqlDbConnectionString = "Server=(local)\SQLEXPRESS;Database=Octopus;Trusted_Connection=True;"
+
+            # The admin user to create
+            OctopusAdminUsername = "admin"
+            OctopusAdminPassword = "<my secret password>"
+
+            # optional parameters
+            AllowUpgradeCheck = $true
+            AllowCollectionOfAnonymousUsageStatistics = $true
+            ForceSSL = $false
+            ListenPort = 10943
+            DownloadUrl = "https://octopus.com/downloads/latest/WindowsX64/OctopusServer"
+        }
+    }
+}
+
+# Execute the configuration above to create a mof file
+SampleConfig
+
+# Run the configuration
+Start-DscConfiguration -Path ".\SampleConfig" -Verbose -wait
+
+# Test the configuration ran successfully
+Test-DscConfiguration

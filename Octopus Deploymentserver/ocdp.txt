@@ -1,0 +1,328 @@
+
+ 21
+
+OctopusDeploy server:
+--------------------
+
+
+Deploy Server:
+
+port :80
+
+windows server 2008 r2 or windows server 2012
+
+Hardware requirments:
+
+2GB Ram   10GB diskspace ( upto 30 deployments )
+
+dual-core  CPU
+ 
+4GB Ram  20GB diskspace ( >30 deployments )
+
+DataBAse : SQL Server 2008 (Sql express)
+
+
+Deploy server default server details:
+====================================
+
+
+Permission	         Object	                              Reason	                                                             Applied with
+
+Full control       	The Octopus "Home" folder,             Octopus stores logs, temporary data, 
+                        e.g. C:\Octopus                        and dynamic configuration in this folder
+
+Read	               The directory Octopus was installed to 
+                       ( C:\Program Files\Octopus Deploy)	Octopus needs these files in order to run	Windows Explorer
+Read	                The HLKM\Software\Octopus registry key	       Octopus determines the location of its configuration files from this key	Regedit
+
+Full control	The OctopusDeploy Windows Service	Octopus must be able to upgrade and restart itself for remote administration	SC.EXE
+
+Listen	Port 10943      Octopus accepts commands from polling Tentacles on this port	         NETSH.EXE
+
+Listen	Port 80  	The Octopus server responds to browser requests on this port	         NETSH.EXE
+
+
+db_owner	For the SQL database. Learn more.	Octopus needs to be able to manage its database, including making schema changes	SQL Server Management Studio
+                  
+
+NOte     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+packages:
+
+
+
+
+---> nuget package install on Octopus deployment server
+
+
+
+Tentacle(client):
+================
+X.509 certificate public key  0
+
+defualt port : 10933
+
+Tentacle 3.1+ (TLS 1.0 or 1.2): .NET Framework 4.5+ (download)
+
+Windows Server 2008 R2 Windows Server 2012 Windows Server 2012 R2  Windows Server 2016 
+
+
+
+Installation Requirements for Tentacle:
+======================================
+
+Windows Server 2003 SP2 (N.B. Not supported for Tentacle 3.1 and up due to .NET 4.5 dependency) 
+
+Windows Server 2008 (N.B. SP1 not supported for Tentacle 3.1 and up due to .NET 4.5 dependency)
+
+Windows Server 2008 R2 Windows Server 2012 Windows Server 2012 R2  Windows Server 2016 
+
+(Both"Server Core" and "Server with a GUI" installations are supported for Tentacle).
+
+.NET Framework.
+
+Tentacle 3.0 (TLS 1.0): .NET Framework 4.0+ (download).
+
+Tentacle 3.1+ (TLS 1.0 or 1.2): .NET Framework 4.5+ (download).
+
+Windows PowerShell 2.0. This is automatically installed on 2008 R2, but for 2008 pre-R2 you'll 
+
+need to install it (x86 download, x64 download).
+
+Windows PowerShell 3.0 or 4.0 is recommended, both of which are compatible with PowerShell 2.0, but execute against .NET 4.0+.
+
+Windows Server 2003 servers will need Windows Management Framework installed (this includes PowerShell).
+
+Hardware minimum: 512MB RAM, 1GHz CPU, 2GB free disk space.
+
+Download the Tentacle Installer:
+
+The latest Octopus Tentacle MSI can always be downloaded from the Octopus Deploy downloads page. You can also download any previous releases from our archive.
+
+Download for Tentacle:
+======================
+
+step 1: Download the Tentacle package by using bellow link
+
+https://octopus.com/downloads
+
+Installation:
+============
+
+
+Octopus and Tentacle can be configured to communicate two different ways depending on your network setup.
+
+The mode you are using will change the installation process slightly.
+
+        Listening mode (recommended)
+
+        Polling mode
+
+Listening mode:
+==============
+ p            
+
+When installing a Tentacle, you will be asked to choose how Tentacle will communicate with the Octopus server.
+
+ In listening mode, Tentacle listens on a TCP port (port 10933 by default).
+
+ When a package needs to be deployed, Octopus will connect to the Tentacle service on that port.
+
+ In listening mode Tentacle is the TCP server, and Octopus is the TCP client.
+ 
+defualt port : 10933
+
+
+Identified by an X.509 certificate public key that you provide during setup.
+ 
+An X.509 certificate public key  is bridge between Octopus deploy server to taget machines with out username and password
+
+
+|Tentacle home directory: c:\Octopus
+
+Read/Write permissions to the Tentacle "Home directory" that you selected when Tentacle was installed (typically, C:\Octopus).
+
+
+
+Firewall Changes:
+================
+
+To allow your Octopus Deploy server to connect to the Tentacle, you'll need to allow access to TCP port 10933 on the Tentacle (or the port you selected 
+during the installation wizard - port 10933 is just the default).
+
+Using listening mode, you won't typically need to make any firewall changes on the Octopus Deploy server.
+
+Port:
+
+stat menu ---> click  Windows Firewall with Advance security ---> click on inbound rules ---> click on new bound rule ---> click on port -->Next select tcp 
+and enter the port number --> enter the service name ---> ok
+
+
+Note: if we want to check the port working or not by using bellow command
+
+curl https://localhost:10933 -k
+
+
+
+Polling Tentacles:
+-----------------
+
+When installing a Tentacle, you will be asked to choose how Tentacle will communicate with the Octopus server.
+
+ In polling mode, Tentacle will poll the Octopus server periodically to check whether there are any tasks for it to perform.
+
+ Polling mode is the opposite to listening mode. In polling mode, Octopus is the TCP server, and Tentacle is the TCP client.
+ 
+
+
+Firewall Changes:
+--------------
+
+To allow Tentacle to connect to your Octopus Deploy server, you'll need to allow access to port 10943 on the Octopus server (or the port you selected during the installation wizard - port 10943 is just the default).
+
+You will also need to allow Tentacle to access the Octopus HTTP web portal (typically port 80 or 443 - these bindings are selected when you install the Octopus Deploy server).
+
+If your network rules only allow port 80 and 443 to the Octopus server, you can change the server bindings to either HTTP or HTTPS and use the remaining port for polling Tentacle connections.
+
+ The listening port can be changed from the command line. Even if you do use port 80 for Polling Tentacles, the communication is still secure.
+
+Note that the port used to poll Octopus for jobs is different to the port used by your team to access the Octopus Deploy web interface; this is on purpose, 
+and it means you can use different firewall conditions to allow Tentacles to access Octopus by IP address.
+
+Using polling mode, you won't typically need to make any firewall changes on the Tentacle machine.
+
+
+tasks:
+
+Deployment: Octopus deploy server
+
+installation and eviranment setup
+ 
+
+ci/cd: jenkins
+
+install and enviroment set up
+
+scm: svn to git migration without distrub existing environment
+
+  remote repositories: github and gitlab set up( ownsetup )
+
+
+
+copy command:
+============
+
+pscp -r username@remoteserver:target_folder C:/xxx/ssss
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+																	date: 16/2/2018
+
+LATER IS NOW
+
+LEARN NEW THINGS EVERYDAY
+
+
+server infomration:
+------------------
+
+community edition details:
+-------------------------
+
+There is an free option - community, free license for 5 machines. 
+
+
+
+Tips:
+----
+
+Configure your Octopus Server and SQL Server on separate servers.
+
+
+Tentacle:
+--------
+
+HOme directory of tentacle manager : C:\Octopus
+
+Permissions to modify IIS (C:\Windows\system32\inetsrv).
+Permissions to connect a SQL Server database.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+new words:
+=========
+sluggish :  slow-moving or inactive,quiet,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#! /bin/bash
+
+echo " Beginning pre-install "
+
+sudo apt-get update
+
+if [ -a /usr/sbin/apache2 ]; then
+
+
+echo " Apache is already install "
+
+
+else
+
+sudo apt-get install apache2 -y 
+
+fi
+
+
+
+
+#! /bin/bash
+
+echo " Beginning pre-install "
+
+sudo apt-get update
+
+if [ -a /usr/sbin/php]; then
+
+
+echo " php is already install "
+
+
+else
+
+sudo apt-get install php5 libapache2-mod-php5  -y 
+
+fi
+
+ 
+
+ 

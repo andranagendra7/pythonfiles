@@ -1,0 +1,13 @@
+copy the file linux machine to windows machine:
+------------------------------------------------
+
+we can enter the bellow command on windows machine:
+---------------------------------------
+syntax:
+
+pscp username@ip(linuxmachine):/source 0path ( linux machine side file location path )   /destinationpath ( windows file location )
+  
+Example:
+-------
+
+pscp root@hostname:/home/ubuntu/myfile.ext  C:\Users\Name\Downloads\
